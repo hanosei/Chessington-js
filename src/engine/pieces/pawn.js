@@ -5,14 +5,30 @@ import Piece from './piece';
 export default class Pawn extends Piece {
     constructor(player) {
         super(player);
+        this.firstMove = true;
+    }
+
+    moveTo(board, square) {
+        this.firstMove = false;
+        super.moveTo(board, square);
     }
 
     getAvailableMoves(board) {
-        let location = board.findPiece(this)
+        const availableMoves = [];
+        console.log(availableMoves)
+        let location = board.findPiece(this);
         if (this.player === Player.WHITE) {
-            return Square.at(location.row + 1, location.col)
+            availableMoves.push(Square.at(location.row + 1, location.col));
+            if (this.firstMove) {
+                availableMoves.push(Square.at(location.row + 2, location.col));
+            }
         } else {
-            return Square.at(location.row - 1, location.col)
+            availableMoves.push(Square.at(location.row - 1, location.col));
+            if (this.firstMove) {
+                availableMoves.push(Square.at(location.row - 2, location.col));
+            }
         }
+        console.log(availableMoves)
+        return availableMoves;
     }
 }
