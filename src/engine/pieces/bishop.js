@@ -12,33 +12,57 @@ export default class Bishop extends Piece {
         let location = board.findPiece(this);
         let row;
         let col;
+        let square;
+        let piece;
+        //using while because it moves diagonally so needs ro and coloumn eah move
 
-        row = location.row - 1, col = location.col - 1;
+       row = location.row - 1, col = location.col - 1;
         while (row >= 0 && col >= 0) {
-            bishopMoves.push(Square.at(row, col));
-            row --;
-            col --;
+            square = Square.at(row, col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                bishopMoves.push(Square.at(row, col));
+                row --, col --;
+            } else {
+                break;
+            }
+            
         }
 
         row = location.row - 1, col = location.col + 1;
         while (row >= 0 && col < GameSettings.BOARD_SIZE) {
-            bishopMoves.push(Square.at(row, col));
-            row --;
-            col ++;
+            square = Square.at(row, col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                bishopMoves.push(Square.at(row, col));
+                row --, col ++;
+            } else {
+                break;
+            }
         }
 
         row = location.row + 1, col = location.col - 1;
         while (row < GameSettings.BOARD_SIZE && col >= 0) {
-            bishopMoves.push(Square.at(row,col));
-            row ++;
-            col --;
+            square = Square.at(row, col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                bishopMoves.push(Square.at(row,col));
+                row ++, col --
+            } else {
+                break;
+            }
         }
 
         row = location.row + 1, col = location.col + 1;
         while (row < GameSettings.BOARD_SIZE && col < GameSettings.BOARD_SIZE) {
-            bishopMoves.push(Square.at(row, col));
-            row ++;
-            col ++;
+            square = Square.at(row, col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                bishopMoves.push(Square.at(row, col));
+                row ++, col ++;
+            } else {
+                break;
+            } 
         }
 
         return bishopMoves;
