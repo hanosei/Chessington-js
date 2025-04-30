@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Square from '../square';
 import GameSettings from '../gameSettings';
+import King from './king';
 
 export default class Bishop extends Piece {
     constructor(player) {
@@ -24,6 +25,8 @@ export default class Bishop extends Piece {
                 bishopMoves.push(Square.at(row, col));
                 row --, col --;
             } else {
+                if (piece.player !== this.player && !(piece instanceof King)) bishopMoves.push(Square.at(row, col));
+                row --, col --;
                 break;
             }
             
@@ -37,6 +40,8 @@ export default class Bishop extends Piece {
                 bishopMoves.push(Square.at(row, col));
                 row --, col ++;
             } else {
+                if (piece.player !== this.player && !(piece instanceof King)) bishopMoves.push(Square.at(row, col));
+                row --, col ++;
                 break;
             }
         }
@@ -49,6 +54,8 @@ export default class Bishop extends Piece {
                 bishopMoves.push(Square.at(row,col));
                 row ++, col --
             } else {
+                if (piece.player !== this.player && !(piece instanceof King)) bishopMoves.push(Square.at(row, col));
+                row ++, col --;
                 break;
             }
         }
@@ -61,6 +68,8 @@ export default class Bishop extends Piece {
                 bishopMoves.push(Square.at(row, col));
                 row ++, col ++;
             } else {
+                if (piece.player !== this.player && !(piece instanceof King)) bishopMoves.push(Square.at(row, col));
+                row ++, col ++;
                 break;
             } 
         }
