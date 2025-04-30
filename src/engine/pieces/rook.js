@@ -11,18 +11,56 @@ export default class Rook extends Piece {
         //return new Array(0);
         const rookMoves = [];
         let location = board.findPiece(this);
+        let square;
+        let piece;
+        let row;
+        let col;
 
-        for (let row = 0 ; row < GameSettings.BOARD_SIZE; row++) {
-            if (row !==location.row) {
-                rookMoves.push(Square.at(row, location.col));
+        for (row = location.row + 1 ; row < GameSettings.BOARD_SIZE; row++) {
+            square = Square.at(row, location.col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                rookMoves.push(square);
+            } else {
+                if (piece.plyer !== this.player) rookMoves.push(square)
+                    break;
+                }
+        }
+        if (location.row!=0){
+            for (row = location.row - 1 ;row >= 0; row--) {
+                square = Square.at(row, location.col);
+                piece = board.getPiece(square);
+                if (!piece) {
+                    rookMoves.push(square);
+                } else {
+                    if (piece.plyer !== this.player) rookMoves.push(square)
+                        break;
+                    }
             }
         }
-        for (let col = 0; col < GameSettings.BOARD_SIZE; col++) {
-            if (col !==location.col) {
-                rookMoves.push(Square.at(location.row, col));
+        for (col = location.col + 1 ; col < GameSettings.BOARD_SIZE; col++) {
+            square = Square.at(location.row, col);
+            piece = board.getPiece(square);
+            if (!piece) {
+                rookMoves.push(square);
+            } else {
+                if (piece.plyer !== this.player) rookMoves.push(square)
+                    break;
+                }
+        }
+
+        if (location.col!=0) {        
+            for (col = location.col-1; col >= 0; col--) {
+                square = Square.at(location.row, col);
+                piece = board.getPiece(square);
+                if (!piece) {
+                    rookMoves.push(square);
+                } else {
+                    if (piece.plyer !== this.player) rookMoves.push(square)
+                        break;
+                }
             }
         }
         return rookMoves;
     }
 }
-
