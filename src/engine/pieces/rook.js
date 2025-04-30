@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Square from '../square';
 import GameSettings from '../gameSettings';
+import King from './king';
 
 export default class Rook extends Piece {
     constructor(player) {
@@ -22,7 +23,7 @@ export default class Rook extends Piece {
             if (!piece) {
                 rookMoves.push(square);
             } else {
-                if (piece.plyer !== this.player) rookMoves.push(square)
+                if (piece.player !== this.player && !(piece instanceof King)) rookMoves.push(square)
                     break;
                 }
         }
@@ -33,7 +34,7 @@ export default class Rook extends Piece {
                 if (!piece) {
                     rookMoves.push(square);
                 } else {
-                    if (piece.plyer !== this.player) rookMoves.push(square)
+                    if (piece.player !== this.player && !(piece instanceof King)) rookMoves.push(square)
                         break;
                     }
             }
@@ -44,7 +45,7 @@ export default class Rook extends Piece {
             if (!piece) {
                 rookMoves.push(square);
             } else {
-                if (piece.plyer !== this.player) rookMoves.push(square)
+                if (piece.player !== this.player && !(piece instanceof King)) rookMoves.push(square)
                     break;
                 }
         }
@@ -56,7 +57,7 @@ export default class Rook extends Piece {
                 if (!piece) {
                     rookMoves.push(square);
                 } else {
-                    if (piece.plyer !== this.player) rookMoves.push(square)
+                    if (piece.player !== this.player && !(piece instanceof King)) rookMoves.push(square)
                         break;
                 }
             }
