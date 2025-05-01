@@ -11,4 +11,15 @@ export default class Piece {
         const currentSquare = board.findPiece(this);
         board.movePiece(currentSquare, newSquare);
     }
+
+    isValidMove(piece) {
+        //console.log(piece instanceof King);
+        if (!piece)
+            return true;
+        else {
+            if (piece.player!==this.player)
+                return true;
+        }
+        return false;
+    }
 }
