@@ -1,6 +1,6 @@
-import GameSettings from '../gameSettings';
 import Piece from './piece';
 import Square from '../square';
+import GameSettings from '../gameSettings';
 
 export default class King extends Piece {
     constructor(player) {
@@ -8,35 +8,42 @@ export default class King extends Piece {
     }
 
     getAvailableMoves(board) {
-        const kingMoves = [];
+        const moves = [];
         let location = board.findPiece(this);
-        if (!location){
-            return
-        }
+        let square;
+        let piece;
         let row;
         let col;
-        
-        let directions = [
-            [-1, -1], [-1, 0], [-1, 1], // up+left, up, up+right
-            [0, -1], [0, 1], // left, right
-            [1, -1], [1, 0], [1, 1] // down+left, down, down_right
-        ];
+        let rowStarting = location.row - 1;
+        let colStarting = location.col - 1;
+        let rowEnding = location.row + 1;
+        let colEnding = location.col + 1;
 
-        for (let i = 0; i <directions.length; i++) {
-            row = location.row + directions[i][0];
-            console.log(row);
-            col = location.col + directions[i][1];
 
-            if (row >= 0 && row < GameSettings.BOARD_SIZE && col >= 0 && col < GameSettings.BOARD_SIZE) {
-                let square = Square.at(row, col);
-                let piece = board.getPiece(square);
+        if (location.row===0)
+            rowStarting = location.row;
+        if (location.col===0)
+            colStarting = location.col;
+        if (location.row===GameSettings.BOARD_SIZE-1)
+            rowEnding = location.row;
+        if (location.col===GameSettings.BOARD_SIZE-1)
+            colEnding = location.col;
 
-                if (!piece) {
-                kingMoves.push(Square.at(row, col));
+        for (row = rowStarting; row <= rowEnding; row++) {
+            for (col = colStarting; col<= colEnding; col++){
+                if (!(row===location.row && col===location.col)) {
+                    square = Square.at(row, col);
+                    piece = board.getPiece(square);
+                    if (super.isValidMove(piece)&& !(piece instanceof King)) {
+                        moves.push(square);
+                        if (piece)
+                            break;
+                    }
+                    else
+                        break;
                 }
             }
         }
-
-        return getAvailableMoves;
+        return moves;
     }
 }
