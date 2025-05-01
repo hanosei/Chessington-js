@@ -2,6 +2,7 @@ import Queen from '../../../src/engine/pieces/queen';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import Pawn from '../../../src/engine/pieces/pawn';
 
 describe.only('Queen', () => {
   let board;
@@ -25,4 +26,37 @@ describe.only('Queen', () => {
 
             moves.should.deep.include.members(expectedMoves);
         });
+
+        it('cannot move through friendly pieces', () => {
+        const queen = new Queen(Player.WHITE);
+        const friendlyPiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(4, 4), queen);
+        board.setPiece(Square.at(6, 6), friendlyPiece);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(7, 7));
+    });
+
+    it('cannot move through opposing pieces', () => {
+        const queen = new Queen(Player.WHITE);
+        const opposingPiece = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(4, 4), queen);
+        board.setPiece(Square.at(6, 6), opposingPiece);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(7, 7));
+    });
+
+    it('can take opposing pieces', () => {
+        const queen = new Queen(Player.WHITE);
+        const opposingPiece = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(4, 4), queen);
+        board.setPiece(Square.at(6, 6), opposingPiece);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(6, 6));
+    });
 });
