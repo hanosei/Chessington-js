@@ -4,7 +4,7 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Pawn from '../../../src/engine/pieces/pawn';
 
-describe.only('Queen', () => {
+describe('Queen', () => {
   let board;
         beforeEach(() => board = new Board());
         it('can move laterally and diagonally', () => {
@@ -58,5 +58,16 @@ describe.only('Queen', () => {
         const moves = queen.getAvailableMoves(board);
 
         moves.should.deep.include(Square.at(6, 6));
+    });
+
+    it('cannot take friendly pieces', () => {
+        const queen = new Queen(Player.WHITE);
+        const friendlyPiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(4, 4), queen);
+        board.setPiece(Square.at(6, 6), friendlyPiece);
+
+        const moves = queen.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(6, 6));
     });
 });
